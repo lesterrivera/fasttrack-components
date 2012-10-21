@@ -1,0 +1,139 @@
+h1. fasttrack-components
+
+Ready-to-deploy and example code to customize and extend CA Identity Manager (now CA IdentityMinder) to address IAM design scenarios.
+
+h2. What is this?
+
+The CA Identity Manager allows IT departments to automate the on-boarding, modification and off-boarding of users, to enable self-service requests and automate user account management on enterprise systems, such as Active Directory, UNIX, RACF, and many more.
+
+You can extend CA Identity Manager's functionality using a set of APIs:
+* Logical Attribute API Ñ Enables you to display an attribute differently than how it is stored physically in a user directory.
+* Business Logic Task Handler (BLTH) API Ñ Allows you to perform custom business logic during data validation or transformation operations.
+* Workflow API Ñ Provides information to a custom script in a workflow process.
+* Participant Resolver API Ñ Enables you to specify the list of participants who are authorized to approve a workflow activity.
+* Event Listener API Ñ Enables you to create a custom event listener that listens for a specific Identity Manager event or group of events. When the event occurs, the event listener can perform custom business logic.
+* Notification Rule API Ñ Lets you determine the users who should receive an email notification.
+* Email Template API Ñ Includes event-specific information in an email notification.
+
+h2. Available Components
+
+The following components are available in the project:
+
+Event Listener
+* **org.fasttrack.evt.AssignProvisioningRole** Ñ Event Listener to assign Provisioning Roles based on user values.
+Business Logic Task Handler (BLTH)
+* **org.fasttrack.blth.AssignProvisioningRole** Ñ Assign Provisioning Roles based on user values. BLTH version of the Event Listener with reduced functionality.
+* **org.fasttrack.blth.FormatFullname** Ñ Formats the fullname field according to the provided format template.
+* **org.fasttrack.blth.GenerateCID** Ñ Generates and assigns the ContractorID (CID); a contractor version of an employee number.
+* **org.fasttrack.blth.GenerateLANID** Ñ Generates and assigns the LANID; a global userID for user accounts.
+* **org.fasttrack.blth.GeneratePassword** Ñ Generates a unique password and assigns it to the user.
+* **org.fasttrack.blth.SetContractorValues** Ñ Set default values for contractor-related user attributes.
+* **org.fasttrack.blth.SetManagerAttributes** Ñ Set additional manager-related values on the user object based on selection of manager.
+* **org.fasttrack.blth.VerifyNoPreviousUserRecord** Ñ Verify that the user to be created does not already exist in the CA Identity Manager system.
+
+For more information, the project contains javadoc documentation in the /doc directory.
+
+h2. 1. Get Started
+
+h3. Get the CA Identity Manager API library
+
+Once you complete the installation of CA Identity Manager, the Administrative Tools include configuration files, scripts, utilities, samples, and jar files that you use to compile custom objects with APIs and API code samples. The Administrative Tools are placed in the following default locations:
+* Windows: C:\Program Files\CA\Identity Manager\IAM Suite\Identity Manager\tools
+* UNIX: /opt/CA/IdentityManager/IAM_Suite/Identity_Manager/tools
+*Note:* The notation _admin_tools_ is used as a convenience throughout to refer to the Administrative Tools installation directory.
+
+h3. Setup the Library and Compile source
+
+To compile the source in eclipse, you will need configure the CA Identity Manager API library to your java build path. All the required java libraries can be found at the *_admin_tools_/tools/lib* directory. I recommend defining the CA Identity Manager API library as a "User Library" inside eclipse with a specified product version number. That way, you will be able to manage multiple versions of the library as new product versions are released. Once complete, you should be able to compile the source.
+
+An equivalent configuration is required if compiling source in other IDEs (such as Netbeans). 
+
+h3. Distribute compiled classes to CA Identity Manager
+
+CA Identity Manager looks for compiled .class files in a designated location within your application server; that is, the *IdentityMinder.ear/custom* directory. 
+
+For example, the custom Business Logic Task Handlers (BLTH) are in the package org.fasttrack.blth, the following is a valid location for FormatFullname.class on an example WebLogic deployment (in windows):
+
+C:\bea\user_projects\mydomain\applications\IdentityMinder.ear\custom\org\fasttrack\blth\FormatFullname.class
+
+*Note:* As of this writing, CA Identity Manager does not allow installation of custom object using a jar library.
+
+h2. 2. Configuration in CA Identity Manager
+
+Configuration of Business Logic Task Handlers (BLTH), Event Listeners, and other components that customize and extend CA Identity Manager may change slightly with each product version; so, its likely best to refer to the production documentation for specifics. However, some notes and advice is provided in sections below.
+		
+h3. Configure the Business Logic Task Handlers (BLTH)
+
+Business Logic Task Handlers (BLTH) can be either task-specific or global in scope; that is:
+* Task-specific BLTH apply to a particular task or set of tasks. The code is specified directly in the User Console task screen during task screen configuration.
+* Global BLTH can apply to any task in the Identity Manager environment. They are useful for corporate policies that must be enforced across many or all tasks.
+
+Some things to keep in mind with BLTH components:
+* Multiple BLTH components can be configured on a task to execute in sequence; that is, one after the other.
+* Some BLTH components require configuration of user-defined properties to define options for the business logic inside. Refer to the javadocs for specific options.
+* A number of BLTH assumes the use of certain user attributes in a specific manner. If this is not the case, it is fairly easy to change the code to use the user attributes you require. Refer to the javadocs for specific usage of user attributes.
+
+h3. Configure the Event Listener
+
+Event Listeners are assigned to specific events and are configured through the Management Console. Event Listeners will execute for every event it's configured for, regardless which task triggers it.
+
+The AssignProvisioningRole Event Listener is designed to function with specific triggers and requirements, please review the javadoc for specific details.
+
+The AssignProvisioningRole Event Listener requires a few steps to work in the system:
+# Compile the code in eclipse.
+# Copy the classes to the org directory to ..\IdentityMinder.ear\custom.
+# Using the Management Console configure Event Listeners settings:
+** Select Environments, and then select your environment.
+** Select Advanced Settings, and then select Event Listeners.
+** Select New.
+** In the Event Listener Properties section enter:
+bc. Name:		CreateAssignProvisioningRole
+Class:		org.fasttrack.evt.AssignProvisioningRole
+Listener Level: CreateUserEvent 
+
+** On User Defined Properties, add property settings below. Click Add button.
+bc. Property:	SMTP_SERVER
+Value:		<SMTP Host Name or IP Address>  
+ 	
+bc. Property:	SMTP_PORT
+Value:		<SMTP Port; Optional if default port (25)>   
+  	
+bc. Property:	TO_EMAIL
+Value:		<Email Address to receive; More than one email can be used separated by comma (,)>   
+ 	
+bc. Property:	FROM_EMAIL
+Value:		<Email Address to send; may be required by SMTP server>    
+ 	
+bc. Property:	DEBUG
+Value:		<Optional. TRUE if you want to trace SMTP in server log.
+ 
+bc. Property:	BASE_ROLE
+Value:		<Name of the Provisioning Role assigned to all users.>
+
+** Click Save.
+# Repeat for the following settings:   
+bc. Name:           ModifyAssignProvisioningRole
+Class:          org.fasttrack.evt.AssignProvisioningRole
+Listener Level: ModifyUserEvent   
+
+# Restart Identity Manager service.
+    
+h1. License
+
+<pre>
+This software is licensed under the Apache 2 license, quoted below.
+
+Copyright 2009-2012 Lester Rivera
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+</pre>
