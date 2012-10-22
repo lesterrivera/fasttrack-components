@@ -1,10 +1,10 @@
 h1. fasttrack-components
 
-Ready-to-deploy and example code to customize and extend CA Identity Manager (now CA IdentityMinder) to address IAM design scenarios.
+Ready-to-deploy and example code to customize and extend CA Identity Manager (now CA IdentityMinder) to address common IAM design scenarios.
 
 h2. What is this?
 
-The CA Identity Manager allows IT departments to automate the on-boarding, modification and off-boarding of users, to enable self-service requests and automate user account management on enterprise systems, such as Active Directory, UNIX, RACF, and many more.
+CA Identity Manager is an Identity Management product that allows IT departments to automate the on-boarding, modification and off-boarding of users, to enable self-service requests and automate user account management on enterprise systems, such as Active Directory, UNIX, RACF, and many more.
 
 You can extend CA Identity Manager's functionality using a set of APIs:
 * Logical Attribute API - Enables you to display an attribute differently than how it is stored physically in a user directory.
@@ -19,9 +19,10 @@ h2. Available Components
 
 The following components are available in the project:
 
-Event Listener
+**Event Listener** 
 * **org.fasttrack.evt.AssignProvisioningRole** - Event Listener to assign Provisioning Roles based on user values.
-Business Logic Task Handler (BLTH)
+
+**Business Logic Task Handler (BLTH)**
 * **org.fasttrack.blth.AssignProvisioningRole** - Assign Provisioning Roles based on user values. BLTH version of the Event Listener with reduced functionality.
 * **org.fasttrack.blth.FormatFullname** - Formats the fullname field according to the provided format template.
 * **org.fasttrack.blth.GenerateCID** - Generates and assigns the ContractorID (CID); a contractor version of an employee number.
@@ -44,9 +45,7 @@ Once you complete the installation of CA Identity Manager, the Administrative To
 
 h3. Setup the Library and Compile source
 
-To compile the source in eclipse, you will need configure the CA Identity Manager API library to your java build path. All the required java libraries can be found at the *_admin_tools_/tools/lib* directory. I recommend defining the CA Identity Manager API library as a "User Library" inside eclipse with a specified product version number. That way, you will be able to manage multiple versions of the library as new product versions are released. Once complete, you should be able to compile the source.
-
-An equivalent configuration is required if compiling source in other IDEs (such as Netbeans). 
+To compile the source in an IDE, you will need configure the CA Identity Manager API library to your java build path. All the required java libraries can be found at the *_admin_tools_/tools/lib* directory. I recommend defining the CA Identity Manager API library as a "User Library" inside eclipse, or "Library" in netbeans, with a specified product version number. That way, you will be able to manage multiple versions of the library as new product versions are released. Once complete, you should be able to compile the source.
 
 h3. Distribute compiled classes to CA Identity Manager
 
