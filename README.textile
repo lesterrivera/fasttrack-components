@@ -32,7 +32,7 @@ The following components are available in the project:
 * **org.fasttrack.blth.SetManagerAttributes** - Set additional manager-related values on the user object based on selection of manager.
 * **org.fasttrack.blth.VerifyNoPreviousUserRecord** - Verify that the user to be created does not already exist in the CA Identity Manager system.
 
-For more information, the project contains javadoc documentation in the /doc directory.
+For more information, the project provides details in javadoc documentation.
 
 h2. 1. Get Started
 
