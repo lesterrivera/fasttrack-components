@@ -20,16 +20,16 @@ h2. Available Components
 The following components are available in the project:
 
 Event Listener
-* **org.fasttrack.evt.AssignProvisioningRole** Ñ Event Listener to assign Provisioning Roles based on user values.
+* **org.fasttrack.evt.AssignProvisioningRole** - Event Listener to assign Provisioning Roles based on user values.
 Business Logic Task Handler (BLTH)
-* **org.fasttrack.blth.AssignProvisioningRole** Ñ Assign Provisioning Roles based on user values. BLTH version of the Event Listener with reduced functionality.
-* **org.fasttrack.blth.FormatFullname** Ñ Formats the fullname field according to the provided format template.
-* **org.fasttrack.blth.GenerateCID** Ñ Generates and assigns the ContractorID (CID); a contractor version of an employee number.
-* **org.fasttrack.blth.GenerateLANID** Ñ Generates and assigns the LANID; a global userID for user accounts.
-* **org.fasttrack.blth.GeneratePassword** Ñ Generates a unique password and assigns it to the user.
-* **org.fasttrack.blth.SetContractorValues** Ñ Set default values for contractor-related user attributes.
-* **org.fasttrack.blth.SetManagerAttributes** Ñ Set additional manager-related values on the user object based on selection of manager.
-* **org.fasttrack.blth.VerifyNoPreviousUserRecord** Ñ Verify that the user to be created does not already exist in the CA Identity Manager system.
+* **org.fasttrack.blth.AssignProvisioningRole** - Assign Provisioning Roles based on user values. BLTH version of the Event Listener with reduced functionality.
+* **org.fasttrack.blth.FormatFullname** - Formats the fullname field according to the provided format template.
+* **org.fasttrack.blth.GenerateCID** - Generates and assigns the ContractorID (CID); a contractor version of an employee number.
+* **org.fasttrack.blth.GenerateLANID** - Generates and assigns the LANID; a global userID for user accounts.
+* **org.fasttrack.blth.GeneratePassword** - Generates a unique password and assigns it to the user.
+* **org.fasttrack.blth.SetContractorValues** - Set default values for contractor-related user attributes.
+* **org.fasttrack.blth.SetManagerAttributes** - Set additional manager-related values on the user object based on selection of manager.
+* **org.fasttrack.blth.VerifyNoPreviousUserRecord** - Verify that the user to be created does not already exist in the CA Identity Manager system.
 
 For more information, the project contains javadoc documentation in the /doc directory.
 
@@ -87,35 +87,38 @@ The AssignProvisioningRole Event Listener requires a few steps to work in the sy
 ** Select Advanced Settings, and then select Event Listeners.
 ** Select New.
 ** In the Event Listener Properties section enter:
-bc. Name:		CreateAssignProvisioningRole
+<pre>
+Name:		CreateAssignProvisioningRole
 Class:		org.fasttrack.evt.AssignProvisioningRole
 Listener Level: CreateUserEvent 
-
+</pre>
 ** On User Defined Properties, add property settings below. Click Add button.
-bc. Property:	SMTP_SERVER
+<pre>
+Property:	SMTP_SERVER
 Value:		<SMTP Host Name or IP Address>  
  	
-bc. Property:	SMTP_PORT
+Property:	SMTP_PORT
 Value:		<SMTP Port; Optional if default port (25)>   
   	
-bc. Property:	TO_EMAIL
+Property:	TO_EMAIL
 Value:		<Email Address to receive; More than one email can be used separated by comma (,)>   
  	
-bc. Property:	FROM_EMAIL
+Property:	FROM_EMAIL
 Value:		<Email Address to send; may be required by SMTP server>    
  	
-bc. Property:	DEBUG
+Property:	DEBUG
 Value:		<Optional. TRUE if you want to trace SMTP in server log.
  
-bc. Property:	BASE_ROLE
+Property:	BASE_ROLE
 Value:		<Name of the Provisioning Role assigned to all users.>
-
+</pre>
 ** Click Save.
-# Repeat for the following settings:   
-bc. Name:           ModifyAssignProvisioningRole
+# Repeat for the following settings: 
+<pre>  
+Name:           ModifyAssignProvisioningRole
 Class:          org.fasttrack.evt.AssignProvisioningRole
 Listener Level: ModifyUserEvent   
-
+</pre>
 # Restart Identity Manager service.
     
 h1. License
