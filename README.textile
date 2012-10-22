@@ -87,32 +87,35 @@ The AssignProvisioningRole Event Listener requires a few steps to work in the sy
 ** Select Advanced Settings, and then select Event Listeners.
 ** Select New.
 ** In the Event Listener Properties section enter:
-Name:		CreateAssignProvisioningRole
+pre. Name:		CreateAssignProvisioningRole
 Class:		org.fasttrack.evt.AssignProvisioningRole
 Listener Level: CreateUserEvent
+
 ** On User Defined Properties, add property settings below. Click Add button.
-Property:	SMTP_SERVER
+pre. Property:	SMTP_SERVER
 Value:		<SMTP Host Name or IP Address>  
  	
-Property:	SMTP_PORT
+pre. Property:	SMTP_PORT
 Value:		<SMTP Port; Optional if default port (25)>   
   	
-Property:	TO_EMAIL
+pre. Property:	TO_EMAIL
 Value:		<Email Address to receive; More than one email can be used separated by comma (,)>   
  	
-Property:	FROM_EMAIL
+pre. Property:	FROM_EMAIL
 Value:		<Email Address to send; may be required by SMTP server>    
  	
-Property:	DEBUG
+pre. Property:	DEBUG
 Value:		<Optional. TRUE if you want to trace SMTP in server log.
  
-Property:	BASE_ROLE
+pre. Property:	BASE_ROLE
 Value:		<Name of the Provisioning Role assigned to all users.>
+
 ** Click Save.
 # Repeat for the following settings:   
-Name:           ModifyAssignProvisioningRole
+pre. Name:           ModifyAssignProvisioningRole
 Class:          org.fasttrack.evt.AssignProvisioningRole
-Listener Level: ModifyUserEvent   
+Listener Level: ModifyUserEvent
+
 # Restart Identity Manager service.
     
 h1. License
