@@ -7,13 +7,13 @@ h2. What is this?
 The CA Identity Manager allows IT departments to automate the on-boarding, modification and off-boarding of users, to enable self-service requests and automate user account management on enterprise systems, such as Active Directory, UNIX, RACF, and many more.
 
 You can extend CA Identity Manager's functionality using a set of APIs:
-* Logical Attribute API Ñ Enables you to display an attribute differently than how it is stored physically in a user directory.
-* Business Logic Task Handler (BLTH) API Ñ Allows you to perform custom business logic during data validation or transformation operations.
-* Workflow API Ñ Provides information to a custom script in a workflow process.
-* Participant Resolver API Ñ Enables you to specify the list of participants who are authorized to approve a workflow activity.
-* Event Listener API Ñ Enables you to create a custom event listener that listens for a specific Identity Manager event or group of events. When the event occurs, the event listener can perform custom business logic.
-* Notification Rule API Ñ Lets you determine the users who should receive an email notification.
-* Email Template API Ñ Includes event-specific information in an email notification.
+* Logical Attribute API - Enables you to display an attribute differently than how it is stored physically in a user directory.
+* Business Logic Task Handler (BLTH) API - Allows you to perform custom business logic during data validation or transformation operations.
+* Workflow API - Provides information to a custom script in a workflow process.
+* Participant Resolver API - Enables you to specify the list of participants who are authorized to approve a workflow activity.
+* Event Listener API - Enables you to create a custom event listener that listens for a specific Identity Manager event or group of events. When the event occurs, the event listener can perform custom business logic.
+* Notification Rule API - Lets you determine the users who should receive an email notification.
+* Email Template API - Includes event-specific information in an email notification.
 
 h2. Available Components
 
@@ -87,13 +87,10 @@ The AssignProvisioningRole Event Listener requires a few steps to work in the sy
 ** Select Advanced Settings, and then select Event Listeners.
 ** Select New.
 ** In the Event Listener Properties section enter:
-<pre>
 Name:		CreateAssignProvisioningRole
 Class:		org.fasttrack.evt.AssignProvisioningRole
-Listener Level: CreateUserEvent 
-</pre>
+Listener Level: CreateUserEvent
 ** On User Defined Properties, add property settings below. Click Add button.
-<pre>
 Property:	SMTP_SERVER
 Value:		<SMTP Host Name or IP Address>  
  	
@@ -111,14 +108,11 @@ Value:		<Optional. TRUE if you want to trace SMTP in server log.
  
 Property:	BASE_ROLE
 Value:		<Name of the Provisioning Role assigned to all users.>
-</pre>
 ** Click Save.
-# Repeat for the following settings: 
-<pre>  
+# Repeat for the following settings:   
 Name:           ModifyAssignProvisioningRole
 Class:          org.fasttrack.evt.AssignProvisioningRole
 Listener Level: ModifyUserEvent   
-</pre>
 # Restart Identity Manager service.
     
 h1. License
